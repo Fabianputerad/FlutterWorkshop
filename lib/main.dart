@@ -53,9 +53,9 @@ class _InputPageState extends State<InputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BMI CALCULATOR'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('BMI CALCULATOR'),
+      // ),
       body: Container(
         color: MyColors.bgColor,
         child: Column(
@@ -239,13 +239,21 @@ class _InputPageState extends State<InputPage> {
             InkWell(
               onTap: () {
                 BMIcalculator calc = BMIcalculator(weight: weight, height: height);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ResultPage(
-                              calculateBMI: calc.calculateBMI(),
-                              getResult: calc.getResult(),
-                            )));
+                if (weight != 0) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ResultPage(
+                                calculateBMI: calc.calculateBMI(),
+                                getResult: calc.getResult(),
+                              )));
+                } else if (weight <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Weight harus lebih besar dari 0"),
+                    ),
+                  );
+                }
               },
               child: Container(
                 width: double.infinity,
